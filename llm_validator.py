@@ -1,24 +1,36 @@
+from langchain_core.prompts import PromptTemplate
+from llm import llm
 
+VALIDATION_PROMPT = PromptTemplate(
+    input_variables=["question", "sql", "result"],
+    template="""
+User asked:
+{question}
 
-llm = pipeline("question-answering", model="google/flan-t5-small")
+Generated SQL:
+{sql}
 
-def validate_and_explain(user_query, sql_query, sql_result):
-    result_text = "\n".join([str(row) for row in sql_result])
+SQL Result:
+{result}
 
-    prompt = f"""
-User question:
-{user_query}
+Task:
+1. Check if SQL result answers the question
+2. Give the result in simple English
 
-SQL query:
-{sql_query}
+Rules:
+2. Do not give suggested fix
+3. Be specific to use only the required fields to be retireved based on the user question
 
-SQL result:
-{result_text}
-
-Tasks:
-1. Verify whether SQL result answers the user question.
-2. If yes, explain clearly.
-3. If no, say what is missing.
+Answer clearly.
 """
-    response = llm(prompt, max_length=250)
-    return response[0]["generated_text"]
+)
+
+def validate_and_explain(question, sql, result):
+    prompt = VALIDATION_PROMPT.format(
+        question=question,
+        sql=sql,
+        result=result
+    )
+    response = llm.invoke(prompt)
+    return response.content.strip()
+
