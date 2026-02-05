@@ -4,8 +4,16 @@ from sql_validator import validate_sql
 from llm_validator import validate_and_explain
 
 
+v = {
+        "user_query": "user_query",
+        "generated_sql": "sql_query",
+        "columns": "columns",
+        "rows": "rows",
+        "explanation": "explanation"
+    }
 def query_db(user_query: str):
     # LLM #1 → SQL
+    # print("user_query:",user_query )
     sql_query = text_to_sql(user_query)
 
     # Validate SQL
@@ -27,16 +35,15 @@ def query_db(user_query: str):
         sql_query,
         rows
     )
-
+    #print("explanation",explanation)
     return {
-        "user_query": user_query,
-        "generated_sql": sql_query,
-        "columns": columns,
+        "explanation": explanation,
+        "sql": sql_query,
         "rows": rows,
-        "explanation": explanation
+        "columns": columns
     }
 
-
+# print()
 if __name__ == "__main__":
     while True:
         q = input("\nAsk a question (or type exit): ")
@@ -44,6 +51,7 @@ if __name__ == "__main__":
             break
 
         result = query_db(q)
-        print("\nSQL:", result["generated_sql"])
-        print("Rows:", result["rows"])
-        print("\nExplanation:", result["explanation"])
+        # print("\nSQL:", result["generated_sql"])
+        # print("Rows:", result["rows"])
+        print("\nExplanation:", result)
+        print("\n #######################_____________###############")
