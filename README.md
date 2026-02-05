@@ -1,6 +1,6 @@
 # 🏥 Intelligent Hospital Operations Assistant (Text-to-SQL with LLMs)
 
-An AI-powered hospital operations assistant that allows users to ask **natural language questions** and receive **clear, human-readable answers** based on live database data.
+An AI-powered hospital operations assistant that allows users to ask **natural language questions** and receive **clear, human-readable answers** based on database data.
 
 The system converts user queries into SQL using an LLM, safely executes them on a MySQL database, and uses a second LLM to validate and explain the results in simple English.
 
