@@ -101,9 +101,6 @@ source .venv/bin/activate   # macOS / Linux
 .venv\Scripts\activate      # Windows
 ```
 ### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
 
 ### 3. Configure environment variables
 #### Create .env variables
